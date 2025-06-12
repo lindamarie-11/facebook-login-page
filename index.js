@@ -58,20 +58,20 @@ function serveStaticFile(res, filePath) {
     // Inject Open Graph & Twitter meta tags for HTML
     if (contentType === 'text/html') {
       const ogTags = `
-        <meta property="og:title" content="Lost & Found Pets US" />
-        <meta property="og:description" content="Join our community to help reunite lost pets with their families. Share sightings, post alerts, and get support from caring members who understand how important every pet is. Together, we can bring hope and happy endings to lost pets everywhere." />
- <meta property="og:image" content="https://ea922165-4a00-4a42-83a7-2ac105bdc130-00-1yqnbhwquay4.picard.replit.dev/pawboost.png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Florida Lost Pets" />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Lost & Found Pets Florida" />
-        <meta name="twitter:description" content="Join our community to help reunite lost pets with their families." />
-<meta name="twitter:image" content="https://ea922165-4a00-4a42-83a7-2ac105bdc130-00-1yqnbhwquay4.picard.replit.dev/pawboost.png" />
-      `;
+      <meta property="og:title" content="Lost & Found Pets US" />
+      <meta property="og:description" content="Join our community to help reunite lost pets with their families. Share sightings, post alerts, and get support from caring members who understand how important every pet is. Together, we can bring hope and happy endings to lost pets everywhere." />
+      <meta property="og:image" content="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Florida Lost Pets" />
+    
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Lost & Found Pets Florida" />
+      <meta name="twitter:description" content="Join our community to help reunite lost pets with their families." />
+      <meta name="twitter:image" content="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
+    `;
+    
       content = content.replace('</head>', `${ogTags}</head>`);
     }
 
