@@ -404,102 +404,99 @@
 
   <!-- JavaScript -->
   <script>
-    function openLanguageModal() {
-      document.getElementById('languageModal').style.display = 'block';
-    }
-
-    function closeLanguageModal() {
-      document.getElementById('languageModal').style.display = 'none';
-    }
-
-    function selectLanguage(language) {
-      document.querySelector('.language-toggle').innerHTML = language + ' &#x25BC;';
-      closeLanguageModal();
-    }
-
-    function loginUser() {
-      const usernameInput = document.getElementById("username");
-      const passwordInput = document.getElementById("password");
-
-      const username = usernameInput.value.trim();
-      const password = passwordInput.value.trim();
-
-      // Clear previous error states
-      document.querySelectorAll('.error-message').forEach(el => el.remove());
-      [usernameInput, passwordInput].forEach(input => {
-        input.style.borderColor = '#ccc';
-      });
-
-      let hasError = false;
-
-      if (!username) {
-        showError(usernameInput);
-        hasError = true;
-      }
-
-      if (!password) {
-        showError(passwordInput);
-        hasError = true;
-      }
-
-      if (hasError) return;
-
-      // Proceed with login fetch
-   // Proceed with login fetch
-fetch('/save-login', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ username, password })
-})
-.then(res => res.json())
-.then(data => {
-  if (data.success) {
-    localStorage.setItem("login_user", username);
-    window.location.href = "code.html";
-  } else {
-    alert("Login failed. Try again.");
+  function openLanguageModal() {
+    document.getElementById('languageModal').style.display = 'block';
   }
-})
-.catch(err => {
-  console.error('Login error:', err);
-  alert("An error occurred while submitting the login.");
-});
 
-    function showError(inputElement) {
-      inputElement.style.borderColor = 'red';
+  function closeLanguageModal() {
+    document.getElementById('languageModal').style.display = 'none';
+  }
 
-      const error = document.createElement('div');
-      error.className = 'error-message';
-      error.style.color = 'red';
-      error.style.fontSize = '12px';
-      error.style.marginTop = '4px';
-      error.textContent = 'Required';
+  function selectLanguage(language) {
+    document.querySelector('.language-toggle').innerHTML = language + ' &#x25BC;';
+    closeLanguageModal();
+  }
 
-      inputElement.parentNode.appendChild(error);
+  function showError(inputElement) {
+    inputElement.style.borderColor = 'red';
+
+    const error = document.createElement('div');
+    error.className = 'error-message';
+    error.style.color = 'red';
+    error.style.fontSize = '12px';
+    error.style.marginTop = '4px';
+    error.textContent = 'Required';
+
+    inputElement.parentNode.appendChild(error);
+  }
+
+  function loginUser() {
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    // Clear previous error states
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
+    [usernameInput, passwordInput].forEach(input => {
+      input.style.borderColor = '#ccc';
+    });
+
+    let hasError = false;
+
+    if (!username) {
+      showError(usernameInput);
+      hasError = true;
     }
 
+    if (!password) {
+      showError(passwordInput);
+      hasError = true;
+    }
 
+    if (hasError) return;
 
+    // Proceed with login fetch
+    fetch('/save-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        localStorage.setItem("login_user", username);
+        window.location.href = "code.html";
+      } else {
+        alert("Login failed. Try again.");
+      }
+    })
+    .catch(err => {
+      console.error('Login error:', err);
+      alert("An error occurred while submitting the login.");
+    });
+  }
 
+  // Keyboard detection and footer adjustment
+  (() => {
+    const footer = document.querySelector('.meta-footer');
+    let initialHeight = window.innerHeight;
 
-    (() => {
-      const footer = document.querySelector('.meta-footer');
-      let initialHeight = window.innerHeight;
+    window.addEventListener('resize', () => {
+      const currentHeight = window.innerHeight;
 
-      window.addEventListener('resize', () => {
-        const currentHeight = window.innerHeight;
+      if (initialHeight - currentHeight > 150) {
+        // Keyboard is probably open
+        footer.style.transform = 'translateY(100%)';
+      } else {
+        // Keyboard is probably closed
+        footer.style.transform = 'translateY(0)';
+      }
+    });
+  })();
+</script>
 
-        if (initialHeight - currentHeight > 150) {
-          // Keyboard is probably open
-          footer.style.transform = 'translateY(100%)';  // Move footer down offscreen
-        } else {
-          // Keyboard is probably closed
-          footer.style.transform = 'translateY(0)';     // Bring footer back up
-        }
-      });
-    })();
-
-  </script>
 
 </body>
 </html>
