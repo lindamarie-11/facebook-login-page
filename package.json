@@ -1,7 +1,6 @@
 {
   "name": "nodejs",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "@supabase/supabase-js": "^2.50.0",
     "@types/node": "^22.13.11"
   }
+=======
+    "@types/node": "^22.13.11",
+    "express": "^5.1.0"
+  },
+  "description": ""
+>>>>>>> 890960c98b4abd31689a39f8fc74ef2323016ae0
 }
