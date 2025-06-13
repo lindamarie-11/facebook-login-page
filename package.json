@@ -8,15 +8,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "description": "",
   "dependencies": {
-<<<<<<< HEAD
     "@supabase/supabase-js": "^2.50.0",
-    "@types/node": "^22.13.11"
-  }
-=======
     "@types/node": "^22.13.11",
     "express": "^5.1.0"
-  },
-  "description": ""
->>>>>>> 890960c98b4abd31689a39f8fc74ef2323016ae0
+  }
 }
