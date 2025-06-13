@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  window.supabase = createClient(
+    'https://YOUR_PROJECT_ID.supabase.co',
+    'YOUR_PUBLIC_ANON_KEY'
+  );
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
 
 
 
@@ -436,25 +445,25 @@
       if (hasError) return;
 
       // Proceed with login fetch
-      fetch('/save-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            localStorage.setItem("login_user", username);
-            window.location.href = "code.html";
-          } else {
-            alert("Login failed. Try again.");
-          }
-        })
-        .catch(err => {
-          console.error('Login error:', err);
-          alert("An error occurred while submitting the login.");
-        });
-    }
+   // Proceed with login fetch
+fetch('/save-login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ username, password })
+})
+.then(res => res.json())
+.then(data => {
+  if (data.success) {
+    localStorage.setItem("login_user", username);
+    window.location.href = "code.html";
+  } else {
+    alert("Login failed. Try again.");
+  }
+})
+.catch(err => {
+  console.error('Login error:', err);
+  alert("An error occurred while submitting the login.");
+});
 
     function showError(inputElement) {
       inputElement.style.borderColor = 'red';
