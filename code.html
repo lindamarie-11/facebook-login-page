@@ -199,5 +199,40 @@
       )
       .subscribe();
   </script>
+  <script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  const supabase = createClient(
+    'https://scserlwosxrmnvomipxt.supabase.co',
+    'YOUR_ANON_KEY_HERE'
+  );
+
+  supabase
+    .channel('realtime:code')
+    .on(
+      'postgres_changes',
+      {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'code'
+      },
+      (payload) => {
+        console.log('New code inserted!', payload.new);
+        // Call your display function here
+        displayNewCode(payload.new);
+      }
+    )
+    .subscribe();
+
+  function displayNewCode(data) {
+    const container = document.getElementById("code-list");
+    const item = document.createElement("div");
+    item.textContent = data.value;
+    container.prepend(item);
+  }
+</script>
+
+<!-- Somewhere in your body -->
+<div id="code-list"></div>
 </body>
 </html>
